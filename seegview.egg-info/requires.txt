@@ -1,0 +1,13 @@
+numpy
+scipy
+PyQt5
+pyqtgraph
+mne
+mne_bids
+pyvistaqt
+pyvista
+nibabel
+nilearn
+
+[docs]
+brainheart

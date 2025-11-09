@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: seegview
+Version: 0.1.0
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: PyQt5
+Requires-Dist: pyqtgraph
+Requires-Dist: mne
+Requires-Dist: mne_bids
+Requires-Dist: pyvistaqt
+Requires-Dist: pyvista
+Requires-Dist: nibabel
+Requires-Dist: nilearn
+Provides-Extra: docs
+Requires-Dist: brainheart; extra == "docs"
+Dynamic: provides-extra
+Dynamic: requires-dist
