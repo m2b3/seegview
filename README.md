@@ -72,9 +72,9 @@ The example script also uses a Freesurfer parcellation (2), ran locally. Please 
 
 Afterwards, you can run the script as follows: 
 
-'''bash
-python -i .\seegview\test_visualizer_full.py
-'''
+```bash
+   python -i .\seegview\test_visualizer_full.py
+```
 
 ## Dependencies
 
