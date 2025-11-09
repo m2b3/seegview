@@ -1,0 +1,4 @@
+*.pyc
+/seegview.egg-info
+/build
+seegview/.vscode/settings.json
