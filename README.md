@@ -66,9 +66,9 @@ pip install .
 
 ### Usage
 
-This package provides an example script, found in test_ecg_widget.py. The reference data comes from (SOURCE, ALSO NEED TO ADD THE BIBLIOGRAPHY IN THE END), with subject "sub-4r3o". To run the file, please download the subject's folder from https://dabi.loni.usc.edu/dsi/W4SNQ7HR49RL, and add the destination of its parent directory in config.py. 
+This package provides an example script, found in test_ecg_widget.py. The reference data comes from (1), with subject "sub-4r3o". To run the file, please download the subject's folder from https://dabi.loni.usc.edu/dsi/W4SNQ7HR49RL, and add the destination of its parent directory in config.py. 
 
-The example script also uses a Freesurfer parcellation (SOURCE), ran locally. Please consult the Freesurfer website on installation instructions, and how to run recon-all. Add the destination of the Freesurfer output directory to config.py. 
+The example script also uses a Freesurfer parcellation (2), ran locally. Please consult the Freesurfer website on installation instructions, and how to run recon-all. Add the destination of the Freesurfer output directory to config.py. 
 
 Afterwards, you can run the script as follows: 
 
@@ -87,3 +87,10 @@ The package automatically installs the following dependencies:
 - mne_bids 
 - pyvistaqt 
 - pyvista
+
+
+## Bibliography
+
+1. Paulk, A. C. et al. Local and distant cortical responses to single pulse intracranial stimulation in the human brain are differentially modulated by specific stimulation parameters. Brain Stimulat. 15, 491–508 (2022). 
+
+2. Fischl, B. FreeSurfer. Neuroimage 62, 774–781 (2012).
