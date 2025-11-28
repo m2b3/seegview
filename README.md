@@ -88,7 +88,6 @@ The package automatically installs the following dependencies:
 - pyvistaqt 
 - pyvista
 
-
 ## Bibliography
 
 1. Paulk, A. C. et al. Local and distant cortical responses to single pulse intracranial stimulation in the human brain are differentially modulated by specific stimulation parameters. Brain Stimulat. 15, 491–508 (2022). 
