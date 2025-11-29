@@ -1,6 +1,10 @@
 import pyqtgraph as pg
 import numpy as np
 
+# Temporary Fix
+non_selected_pen = pg.mkPen(color= (255//2, 255//2, 255//2), width = 1)
+selected_pen = pg.mkPen(color= (255, 255, 255), width = 1)
+
 class MultipleTimeWidget(pg.PlotWidget): 
     """A class for plotting Multiple Time Traces, EEG-style
 
@@ -15,6 +19,8 @@ class MultipleTimeWidget(pg.PlotWidget):
             window_duration, 
             num_traces
     ): 
+        super().__init__()
+        
         self.raw = raw
         
         self.ch_names = raw.ch_names
@@ -33,8 +39,12 @@ class MultipleTimeWidget(pg.PlotWidget):
     def _setup_ui(self): 
         self.setLabel("left", "V")
         self.setLabel("bottom", "Time(s)")
+        self._set_line_items()
 
-        self.line_item = self.plot([], [])
+    def _set_line_items(self): 
+        self.line_items = []
+        for i in range(self.num_traces): 
+            self.line_items.append(self.plot([], []))
     
     def _update_display(
             self, 
@@ -66,15 +76,23 @@ class MultipleTimeWidget(pg.PlotWidget):
         
         # Modify this later, this is just a proof of concept for now    
         curr_channels = self._get_current_channels()
-        raw_traces = self.raw[curr_channels, start_idx_raw: end_idx_raw]
+        raw_traces, _ = self.raw[curr_channels, start_idx_raw: end_idx_raw]
         # Now need to offset
         offset = np.max(np.std(raw_traces, axis = -1)) * 2
         offsets = np.arange(self.num_traces) * offset
         offsets = offsets[:, None]
 
-        raw_traces_offset = raw_traces + offsets
-
-        self.line_item.setData(times, raw_traces_offset)
+        raw_traces_offset = raw_traces - offsets
+        for i in range(self.num_traces): 
+            if curr_channels[i] == self.curr_channel: 
+                pen = selected_pen
+            else: 
+                pen = non_selected_pen
+            
+            self.line_items[i].setData(
+                times, 
+                raw_traces_offset[i, :])
+            self.line_items[i].setPen(pen)
         
     
     def _get_current_channels(self): 

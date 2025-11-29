@@ -169,9 +169,9 @@ class TFRBrowser(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
-    from mne.brainheart.load_reference_dataset import load
+    from brainheart.load_reference_dataset import load
 
-    raw = load()
+    raw = load(0)
     freqs = np.arange(50) + 2
 
     picks = np.arange(2) + 65

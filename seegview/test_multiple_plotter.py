@@ -26,3 +26,4 @@ browser = MultipleTimeWidget(
 
 keybinding_manager = KeybindingManager(browser)
 browser.show()
+browser.redraw()
