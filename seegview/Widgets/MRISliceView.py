@@ -26,6 +26,8 @@ from PyQt5.QtCore import (
 
 from nilearn.image.resampling import reorder_img
 
+import pandas as pd
+
 class MRISliceVIewer(QGraphicsView): 
     def __init__(
             self, 
@@ -128,6 +130,13 @@ class MRIViewer(QWidget):
             self, 
             info
     ): 
+        if isinstance(info, pd.DataFrame): 
+            self.setup_chs_df(info)
+            return
+        else: 
+            self.setup_chs_mne_info(info)
+    
+    def setup_chs_mne_info(self, info):
         # Taken from the Brain Surface Widget code
         positions = []
         names = []
@@ -142,6 +151,10 @@ class MRIViewer(QWidget):
 
         self.sensor_positions = np.array(positions)
         self.sensor_names = names
+    
+    def setup_chs_df(self, info): 
+        self.sensor_names = info["name"].to_list()
+        self.sensor_positions = info[["x", "y", "z"]].to_numpy()
 
     def setup_data(
             self, 

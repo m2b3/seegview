@@ -16,6 +16,8 @@ from seegview.Managers.ChannelManager import ChannelManager
 
 import os
 
+import pandas as pd
+
 class BrainSurfaceWidget(QWidget): 
     
     electrode_name_selected = pyqtSignal(str)
@@ -103,6 +105,30 @@ class BrainSurfaceWidget(QWidget):
             
     
     def add_sensors(self, info, trans = np.eye(4)): 
+        if isinstance(info, pd.DataFrame): 
+            self.add_sensors_df(info)
+        else: 
+            self.add_sensors_mne_info(info)
+
+        # Now transform
+        sensor_pos_augmented = np.hstack(
+            [self.sensor_positions, np.ones((self.sensor_positions.shape[0], 1))])
+
+        sensor_pos_transformed = trans @ sensor_pos_augmented.T
+
+        self.sensor_positions = sensor_pos_transformed.T[:, :3]
+
+        self.plot_sensors()
+        self.plot_sensor_labels()
+
+        # Temporary, do this more proper later
+        self.plotter.track_click_position(callback = self.click_callback)
+
+    def add_sensors_df(self, info): 
+        self.sensor_names = info["name"].to_list()
+        self.sensor_positions = info[["x", "y", "z"]].to_numpy()
+
+    def add_sensors_mne_info(self, info): 
         positions = []
         names = []
 
@@ -121,20 +147,6 @@ class BrainSurfaceWidget(QWidget):
 
         self.sensor_positions = np.array(positions)
         self.sensor_names = names
-
-        # Now transform
-        sensor_pos_augmented = np.hstack(
-            [self.sensor_positions, np.ones((self.sensor_positions.shape[0], 1))])
-
-        sensor_pos_transformed = trans @ sensor_pos_augmented.T
-
-        self.sensor_positions = sensor_pos_transformed.T[:, :3]
-
-        self.plot_sensors()
-        self.plot_sensor_labels()
-
-        # Temporary, do this more proper later
-        self.plotter.track_click_position(callback = self.click_callback)
 
     def plot_sensors(
         self
